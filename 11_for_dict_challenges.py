@@ -30,12 +30,9 @@ students = [
 # Пример вывода:
 # Самое частое имя среди учеников: Маша
 cnt = Counter(person['first_name'] for person in students)
-name_list = list(person['first_name'] for person in students)
-print(name_list)
-cnt1=max(name_list, key=name_list.count)
-print(cnt)
-#По условиям задачи не очень понятно, выводятся ли все имена для случая, если частота у нескольких совпала. У меня не выводятся.
-print('Самое частое имя среди учеников: {}'.format(cnt.most_common(1)[0][0]))
+max_cnt = cnt.most_common(1)[0][1]
+name_list = [val[0] for val in cnt.items() if val[1] == max_cnt]
+print('\n'.join('Самое частое имя среди учеников: {}'.format(name) for name in name_list))
 
 # Задание 3
 # Есть список учеников в нескольких классах, нужно вывести самое частое имя в каждом классе.
@@ -47,15 +44,18 @@ school_students = [
 	[  # это – второй класс
 		{'first_name': 'Маша'},
 		{'first_name': 'Маша'},
-		{'first_name': 'Оля'}
+		{'first_name': 'Оля'},
+        {'first_name': 'Оля'}
 	]
 ]
 # Пример вывода:
 # Самое частое имя в классе 1: Вася
 # Самое частое имя в классе 2: Маша
 for index, students in enumerate(school_students):
-    val = Counter(person['first_name'] for person in students).most_common(1)
-    print('Самое частое имя в классе {}: {}'.format(index+1, val[0][0]))
+    cnt = Counter(person['first_name'] for person in students)
+    max_cnt = cnt.most_common(1)[0][1]
+    name_list = [val[0] for val in cnt.items() if val[1] == max_cnt]
+    print('\n'.join('Самое частое имя  классе {}: {}'.format(index+1,name) for name in name_list))
 
 # Задание 4
 # Для каждого класса нужно вывести количество девочек и мальчиков в нём.
